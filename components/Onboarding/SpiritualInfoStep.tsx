@@ -23,7 +23,11 @@ export default function SpiritualInfoStep({ onNext }: { onNext: (data: FormData)
   } = useForm<FormData>({ resolver: zodResolver(schema) });
 
   return (
-    <form onSubmit={handleSubmit(onNext)} className="space-y-4">
+    <form onSubmit={handleSubmit(onNext)} className="space-y-6">
+      <div className="space-y-1 text-center">
+        <h3 className="text-xl font-semibold text-brand-blue">Spiritual Journey</h3>
+        <p className="text-sm text-gray-600">Share your practices and path</p>
+      </div>
       <div className="space-y-2">
         <Label htmlFor="org">Spiritual Org</Label>
         <Input id="org" placeholder="Spiritual Org" {...register('spiritualOrg')} />

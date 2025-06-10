@@ -153,6 +153,9 @@ Created by Harman Batish
 MIT License.
 Built with ❤️ for India’s spiritual seekers.
 
+### Image Credits
+Hero illustrations sourced from [Unsplash](https://unsplash.com) under the Unsplash License.
+
 📬 Contact
 For feedback, support, or partnership:
 harman@dharmasaathi.com
