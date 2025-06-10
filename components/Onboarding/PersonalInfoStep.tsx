@@ -2,6 +2,9 @@
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
+import { Label } from '@/components/ui/label';
 
 const schema = z.object({
   firstName: z.string().min(1),
@@ -20,13 +23,22 @@ export default function PersonalInfoStep({ onNext }: { onNext: (data: FormData) 
 
   return (
     <form onSubmit={handleSubmit(onNext)} className="space-y-4">
-      <input placeholder="First Name" {...register('firstName')} className="border p-2 w-full" />
-      {errors.firstName && <p className="text-red-500">{errors.firstName.message}</p>}
-      <input placeholder="Last Name" {...register('lastName')} className="border p-2 w-full" />
-      {errors.lastName && <p className="text-red-500">{errors.lastName.message}</p>}
-      <input type="date" {...register('birthdate')} className="border p-2 w-full" />
-      {errors.birthdate && <p className="text-red-500">{errors.birthdate.message}</p>}
-      <button className="bg-blue-500 text-white px-4 py-2">Next</button>
+      <div className="space-y-2">
+        <Label htmlFor="firstName">First Name</Label>
+        <Input id="firstName" placeholder="First Name" {...register('firstName')} />
+        {errors.firstName && <p className="text-red-500 text-sm">{errors.firstName.message}</p>}
+      </div>
+      <div className="space-y-2">
+        <Label htmlFor="lastName">Last Name</Label>
+        <Input id="lastName" placeholder="Last Name" {...register('lastName')} />
+        {errors.lastName && <p className="text-red-500 text-sm">{errors.lastName.message}</p>}
+      </div>
+      <div className="space-y-2">
+        <Label htmlFor="birthdate">Birthdate</Label>
+        <Input id="birthdate" type="date" {...register('birthdate')} />
+        {errors.birthdate && <p className="text-red-500 text-sm">{errors.birthdate.message}</p>}
+      </div>
+      <Button type="submit" className="w-full">Next</Button>
     </form>
   );
 }

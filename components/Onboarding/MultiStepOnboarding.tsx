@@ -27,9 +27,12 @@ export default function MultiStepOnboarding() {
   ];
 
   return (
-    <div className="max-w-md mx-auto p-4">
+    <div className="max-w-md mx-auto p-4 space-y-6 bg-brand-beige rounded-xl shadow">
+      <div className="text-center">
+        <h2 className="text-lg font-semibold text-brand-blue">Step {step + 1} of 6</h2>
+      </div>
       <ProfileProgressBar progress={progress} />
-      <div className="mt-4">{steps[step]}</div>
+      <div>{steps[step]}</div>
     </div>
   );
 }
