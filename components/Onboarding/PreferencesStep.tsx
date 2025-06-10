@@ -2,6 +2,9 @@
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
+import { Label } from '@/components/ui/label';
 
 const schema = z.object({
   partnerAge: z.string(),
@@ -19,10 +22,16 @@ export default function PreferencesStep({ onNext }: { onNext: (data: FormData) =
 
   return (
     <form onSubmit={handleSubmit(onNext)} className="space-y-4">
-      <input placeholder="Preferred Partner Age Range" {...register('partnerAge')} className="border p-2 w-full" />
-      {errors.partnerAge && <p className="text-red-500">{errors.partnerAge.message}</p>}
-      <input placeholder="Preferred Partner City" {...register('partnerCity')} className="border p-2 w-full" />
-      <button className="bg-blue-500 text-white px-4 py-2">Next</button>
+      <div className="space-y-2">
+        <Label htmlFor="age">Preferred Partner Age Range</Label>
+        <Input id="age" placeholder="25-35" {...register('partnerAge')} />
+        {errors.partnerAge && <p className="text-red-500 text-sm">{errors.partnerAge.message}</p>}
+      </div>
+      <div className="space-y-2">
+        <Label htmlFor="city">Preferred Partner City</Label>
+        <Input id="city" placeholder="City" {...register('partnerCity')} />
+      </div>
+      <Button type="submit" className="w-full">Next</Button>
     </form>
   );
 }

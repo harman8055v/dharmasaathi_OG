@@ -2,6 +2,9 @@
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
+import { Label } from '@/components/ui/label';
 
 const schema = z.object({
   spiritualOrg: z.string().optional(),
@@ -21,13 +24,25 @@ export default function SpiritualInfoStep({ onNext }: { onNext: (data: FormData)
 
   return (
     <form onSubmit={handleSubmit(onNext)} className="space-y-4">
-      <input placeholder="Spiritual Org" {...register('spiritualOrg')} className="border p-2 w-full" />
-      <input placeholder="Primary Teacher" {...register('primaryTeacher')} className="border p-2 w-full" />
-      <input placeholder="Practices" {...register('practices')} className="border p-2 w-full" />
-      {errors.practices && <p className="text-red-500">{errors.practices.message}</p>}
-      <input type="number" placeholder="Years on Path" {...register('yearsOnPath', { valueAsNumber: true })} className="border p-2 w-full" />
-      {errors.yearsOnPath && <p className="text-red-500">{errors.yearsOnPath.message}</p>}
-      <button className="bg-blue-500 text-white px-4 py-2">Next</button>
+      <div className="space-y-2">
+        <Label htmlFor="org">Spiritual Org</Label>
+        <Input id="org" placeholder="Spiritual Org" {...register('spiritualOrg')} />
+      </div>
+      <div className="space-y-2">
+        <Label htmlFor="teacher">Primary Teacher</Label>
+        <Input id="teacher" placeholder="Primary Teacher" {...register('primaryTeacher')} />
+      </div>
+      <div className="space-y-2">
+        <Label htmlFor="practices">Practices</Label>
+        <Input id="practices" placeholder="Practices" {...register('practices')} />
+        {errors.practices && <p className="text-red-500 text-sm">{errors.practices.message}</p>}
+      </div>
+      <div className="space-y-2">
+        <Label htmlFor="years">Years on Path</Label>
+        <Input id="years" type="number" {...register('yearsOnPath', { valueAsNumber: true })} />
+        {errors.yearsOnPath && <p className="text-red-500 text-sm">{errors.yearsOnPath.message}</p>}
+      </div>
+      <Button type="submit" className="w-full">Next</Button>
     </form>
   );
 }

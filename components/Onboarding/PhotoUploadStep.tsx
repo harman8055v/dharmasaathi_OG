@@ -1,5 +1,8 @@
 'use client';
 import { useState } from 'react';
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
+import { Label } from '@/components/ui/label';
 
 export default function PhotoUploadStep({ onNext }: { onNext: (files: File[]) => void }) {
   const [files, setFiles] = useState<File[]>([]);
@@ -17,8 +20,11 @@ export default function PhotoUploadStep({ onNext }: { onNext: (files: File[]) =>
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
-      <input type="file" multiple accept="image/*" onChange={handleFiles} />
-      <button className="bg-blue-500 text-white px-4 py-2">Finish</button>
+      <div className="space-y-2">
+        <Label htmlFor="photos">Upload Photos</Label>
+        <Input id="photos" type="file" multiple accept="image/*" onChange={handleFiles} />
+      </div>
+      <Button type="submit" className="w-full">Finish</Button>
     </form>
   );
 }

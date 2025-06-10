@@ -3,6 +3,9 @@ import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { supabase } from '@/lib/supabaseClient';
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
+import { Label } from '@/components/ui/label';
 
 const schema = z.object({
   email: z.string().email(),
@@ -28,14 +31,20 @@ export default function LoginForm() {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-      <input type="email" placeholder="Email" {...register('email')} className="border p-2 w-full" />
-      {errors.email && <p className="text-red-500">{errors.email.message}</p>}
-      <input type="password" placeholder="Password" {...register('password')} className="border p-2 w-full" />
-      {errors.password && <p className="text-red-500">{errors.password.message}</p>}
-      <button type="submit" disabled={isSubmitting} className="bg-blue-500 text-white px-4 py-2">
+      <div className="space-y-2">
+        <Label htmlFor="email">Email</Label>
+        <Input id="email" type="email" placeholder="you@example.com" {...register('email')} />
+        {errors.email && <p className="text-red-500 text-sm">{errors.email.message}</p>}
+      </div>
+      <div className="space-y-2">
+        <Label htmlFor="password">Password</Label>
+        <Input id="password" type="password" placeholder="Your password" {...register('password')} />
+        {errors.password && <p className="text-red-500 text-sm">{errors.password.message}</p>}
+      </div>
+      <Button type="submit" disabled={isSubmitting} className="w-full">
         Login
-      </button>
-      <div className="flex gap-2">
+      </Button>
+      <div className="flex justify-center gap-4 text-sm">
         <button type="button" onClick={() => handleSocial('google')} className="underline">
           Google
         </button>

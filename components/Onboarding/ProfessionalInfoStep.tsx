@@ -2,6 +2,9 @@
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
+import { Label } from '@/components/ui/label';
 
 const schema = z.object({
   education: z.string(),
@@ -20,12 +23,21 @@ export default function ProfessionalInfoStep({ onNext }: { onNext: (data: FormDa
 
   return (
     <form onSubmit={handleSubmit(onNext)} className="space-y-4">
-      <input placeholder="Education" {...register('education')} className="border p-2 w-full" />
-      {errors.education && <p className="text-red-500">{errors.education.message}</p>}
-      <input placeholder="Profession" {...register('profession')} className="border p-2 w-full" />
-      {errors.profession && <p className="text-red-500">{errors.profession.message}</p>}
-      <input placeholder="Annual Income" {...register('annualIncome')} className="border p-2 w-full" />
-      <button className="bg-blue-500 text-white px-4 py-2">Next</button>
+      <div className="space-y-2">
+        <Label htmlFor="education">Education</Label>
+        <Input id="education" placeholder="Education" {...register('education')} />
+        {errors.education && <p className="text-red-500 text-sm">{errors.education.message}</p>}
+      </div>
+      <div className="space-y-2">
+        <Label htmlFor="profession">Profession</Label>
+        <Input id="profession" placeholder="Profession" {...register('profession')} />
+        {errors.profession && <p className="text-red-500 text-sm">{errors.profession.message}</p>}
+      </div>
+      <div className="space-y-2">
+        <Label htmlFor="income">Annual Income</Label>
+        <Input id="income" placeholder="Annual Income" {...register('annualIncome')} />
+      </div>
+      <Button type="submit" className="w-full">Next</Button>
     </form>
   );
 }
