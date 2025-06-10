@@ -23,7 +23,11 @@ export default function LifestyleStep({ onNext }: { onNext: (data: FormData) => 
   } = useForm<FormData>({ resolver: zodResolver(schema) });
 
   return (
-    <form onSubmit={handleSubmit(onNext)} className="space-y-4">
+    <form onSubmit={handleSubmit(onNext)} className="space-y-6">
+      <div className="space-y-1 text-center">
+        <h3 className="text-xl font-semibold text-brand-blue">Lifestyle Choices</h3>
+        <p className="text-sm text-gray-600">Daily habits and preferences</p>
+      </div>
       <div className="space-y-2">
         <Label htmlFor="diet">Diet</Label>
         <Input id="diet" placeholder="Diet" {...register('diet')} />

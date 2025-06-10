@@ -21,7 +21,11 @@ export default function PreferencesStep({ onNext }: { onNext: (data: FormData) =
   } = useForm<FormData>({ resolver: zodResolver(schema) });
 
   return (
-    <form onSubmit={handleSubmit(onNext)} className="space-y-4">
+    <form onSubmit={handleSubmit(onNext)} className="space-y-6">
+      <div className="space-y-1 text-center">
+        <h3 className="text-xl font-semibold text-brand-blue">Partner Preferences</h3>
+        <p className="text-sm text-gray-600">What are you looking for?</p>
+      </div>
       <div className="space-y-2">
         <Label htmlFor="age">Preferred Partner Age Range</Label>
         <Input id="age" placeholder="25-35" {...register('partnerAge')} />

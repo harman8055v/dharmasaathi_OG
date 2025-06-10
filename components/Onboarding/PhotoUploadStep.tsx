@@ -19,7 +19,11 @@ export default function PhotoUploadStep({ onNext }: { onNext: (files: File[]) =>
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4">
+    <form onSubmit={handleSubmit} className="space-y-6">
+      <div className="space-y-1 text-center">
+        <h3 className="text-xl font-semibold text-brand-blue">Add Photos</h3>
+        <p className="text-sm text-gray-600">A smiling photo builds trust</p>
+      </div>
       <div className="space-y-2">
         <Label htmlFor="photos">Upload Photos</Label>
         <Input id="photos" type="file" multiple accept="image/*" onChange={handleFiles} />

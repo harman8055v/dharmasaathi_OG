@@ -22,7 +22,11 @@ export default function PersonalInfoStep({ onNext }: { onNext: (data: FormData) 
   } = useForm<FormData>({ resolver: zodResolver(schema) });
 
   return (
-    <form onSubmit={handleSubmit(onNext)} className="space-y-4">
+    <form onSubmit={handleSubmit(onNext)} className="space-y-6">
+      <div className="space-y-1 text-center">
+        <h3 className="text-xl font-semibold text-brand-blue">Personal Details</h3>
+        <p className="text-sm text-gray-600">Tell us about yourself</p>
+      </div>
       <div className="space-y-2">
         <Label htmlFor="firstName">First Name</Label>
         <Input id="firstName" placeholder="First Name" {...register('firstName')} />

@@ -22,7 +22,11 @@ export default function ProfessionalInfoStep({ onNext }: { onNext: (data: FormDa
   } = useForm<FormData>({ resolver: zodResolver(schema) });
 
   return (
-    <form onSubmit={handleSubmit(onNext)} className="space-y-4">
+    <form onSubmit={handleSubmit(onNext)} className="space-y-6">
+      <div className="space-y-1 text-center">
+        <h3 className="text-xl font-semibold text-brand-blue">Professional Info</h3>
+        <p className="text-sm text-gray-600">Your career and education</p>
+      </div>
       <div className="space-y-2">
         <Label htmlFor="education">Education</Label>
         <Input id="education" placeholder="Education" {...register('education')} />
