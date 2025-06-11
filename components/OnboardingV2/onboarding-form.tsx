@@ -1,9 +1,10 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { supabase } from "@/lib/supabaseClient";
 import { useAuth } from "@/components/Auth/AuthProvider";
 import Spinner from "@/components/ui/spinner";
+import { useRouter } from "next/navigation";
 import { AnimatePresence, motion } from "framer-motion";
 import BasicInfoStep from "./steps/basic-info-step";
 import SpiritualPathStep from "./steps/spiritual-path-step";
@@ -18,6 +19,7 @@ import ProgressIndicator from "./progress-indicator";
 
 export default function OnboardingForm() {
   const { session, loading } = useAuth();
+  const router = useRouter();
   const [currentStep, setCurrentStep] = useState(1);
   const [formData, setFormData] = useState({});
   const [isComplete, setIsComplete] = useState(false);
@@ -59,6 +61,12 @@ export default function OnboardingForm() {
     setIsComplete(false);
   };
 
+  useEffect(() => {
+    if (!loading && !session) {
+      router.push('/');
+    }
+  }, [loading, session, router]);
+
   if (loading) {
     return (
       <div className="flex items-center justify-center h-screen">
@@ -67,9 +75,6 @@ export default function OnboardingForm() {
     );
   }
 
-  if (!session) {
-    return <p>Please log in to continue</p>;
-  }
 
   if (isComplete) {
     return <WelcomeScreen onStartOver={handleStartOver} />;
