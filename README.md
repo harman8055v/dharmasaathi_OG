@@ -79,7 +79,7 @@ DharmaSaathi is India’s first spiritual matrimony and conscious dating platfor
   - Report/block users, admin dashboard, KYC verification, analytics
 
 - **Safety, Trust, and Privacy First**  
-  - All profiles must verify by email/OTP  
+  - Email/OTP verification available for added security
   - KYC/ID badge, privacy settings, incognito browsing (premium)
 
 ---
@@ -129,6 +129,9 @@ NEXT_PUBLIC_SUPABASE_URL=your-supabase-url
 NEXT_PUBLIC_SUPABASE_ANON_KEY=your-supabase-anon-key
 NEXT_PUBLIC_RAZORPAY_KEY_ID=your-razorpay-key-id
 # (Do NOT expose secret keys on frontend!)
+
+Ensure in your Supabase project settings that email confirmation is disabled so
+new users can sign in immediately.
 
 **4. Run the app locally
 
