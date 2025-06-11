@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation"
 import { supabase } from "@/lib/supabaseClient"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
+import Spinner from "@/components/ui/spinner"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import {
@@ -74,6 +75,7 @@ export default function DharmaSaathiLanding() {
   const [lastName, setLastName] = useState("")
   const [signupPassword, setSignupPassword] = useState("")
   const [signupError, setSignupError] = useState("")
+  const [isSubmitting, setIsSubmitting] = useState(false)
 
   // Form validation states
   const [email, setEmail] = useState("")
@@ -132,6 +134,7 @@ export default function DharmaSaathiLanding() {
       return
     }
     if (signupEmailError || phoneError) return
+    setIsSubmitting(true)
     const { data, error } = await supabase.auth.signUp({
       email: signupEmail,
       password: signupPassword,
@@ -141,6 +144,7 @@ export default function DharmaSaathiLanding() {
     })
     if (error || !data.user) {
       setSignupError(error?.message || "Sign up failed")
+      setIsSubmitting(false)
       return
     }
     await supabase.from("users").insert({
@@ -149,6 +153,18 @@ export default function DharmaSaathiLanding() {
       first_name: firstName,
       last_name: lastName,
     })
+    if (!data.session) {
+      const { error: signInError } = await supabase.auth.signInWithPassword({
+        email: signupEmail,
+        password: signupPassword,
+      })
+      if (signInError) {
+        setSignupError(signInError.message)
+        setIsSubmitting(false)
+        return
+      }
+    }
+    setIsSubmitting(false)
     setIsLoginOpen(false)
     router.push("/onboarding")
   }
@@ -323,8 +339,13 @@ export default function DharmaSaathiLanding() {
                     <Button
                       className="w-full bg-primary-900 hover:bg-primary-800"
                       onClick={handleSignUp}
+                      disabled={isSubmitting}
                     >
-                      Create Account
+                      {isSubmitting ? (
+                        <Spinner className="h-4 w-4" />
+                      ) : (
+                        "Create Account"
+                      )}
                     </Button>
                   </div>
                 </TabsContent>
