@@ -154,25 +154,17 @@ export default function DharmaSaathiLanding() {
       phone_number: `${selectedCountryCode}${phoneNumber}`,
     })
 
-    if (!data.session) {
-      const { error: signInError } = await supabase.auth.signInWithPassword({
-        email: signupEmail,
-        password: signupPassword,
-      })
+    const { error: signInError } = await supabase.auth.signInWithPassword({
+      email: signupEmail,
+      password: signupPassword,
+    })
 
-      if (signInError) {
-        const msg = signInError.message.toLowerCase()
-        if (msg.includes('confirm') || msg.includes('verify')) {
-          setSignupError('Please check your email to verify your account.')
-        } else {
-          setSignupError(signInError.message)
-        }
-        setIsSubmitting(false)
-        return
-      }
+    if (signInError) {
+      setSignupError(signInError.message)
+      setIsSubmitting(false)
+      return
     }
- main
-    }
+
     setIsSubmitting(false)
     setIsLoginOpen(false)
     router.push("/onboarding")
