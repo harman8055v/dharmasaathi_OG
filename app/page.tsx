@@ -153,6 +153,7 @@ export default function DharmaSaathiLanding() {
       last_name: lastName,
       phone_number: `${selectedCountryCode}${phoneNumber}`,
     })
+
     if (!data.session) {
       const { error: signInError } = await supabase.auth.signInWithPassword({
         email: signupEmail,
