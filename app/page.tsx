@@ -40,26 +40,26 @@ import Link from "next/link"
 
 // Country codes with flag emojis
 const countryCodes = [
-  { code: "+91", flag: "🇮🇳" },
-  { code: "+1", flag: "🇺🇸" },
-  { code: "+44", flag: "🇬🇧" },
-  { code: "+61", flag: "🇦🇺" },
-  { code: "+86", flag: "🇨🇳" },
-  { code: "+81", flag: "🇯🇵" },
-  { code: "+49", flag: "🇩🇪" },
-  { code: "+33", flag: "🇫🇷" },
-  { code: "+7", flag: "🇷🇺" },
-  { code: "+971", flag: "🇦🇪" },
-  { code: "+65", flag: "🇸🇬" },
-  { code: "+60", flag: "🇲🇾" },
-  { code: "+66", flag: "🇹🇭" },
-  { code: "+852", flag: "🇭🇰" },
-  { code: "+55", flag: "🇧🇷" },
-  { code: "+27", flag: "🇿🇦" },
-  { code: "+234", flag: "🇳🇬" },
-  { code: "+20", flag: "🇪🇬" },
-  { code: "+966", flag: "🇸🇦" },
-  { code: "+64", flag: "🇳🇿" },
+  { code: "+91", flag: "🇮🇳" }, // India
+  { code: "+1", flag: "🇺🇸" }, // USA
+  { code: "+44", flag: "🇬🇧" }, // UK
+  { code: "+61", flag: "🇦🇺" }, // Australia
+  { code: "+86", flag: "🇨🇳" }, // China
+  { code: "+81", flag: "🇯🇵" }, // Japan
+  { code: "+49", flag: "🇩🇪" }, // Germany
+  { code: "+33", flag: "🇫🇷" }, // France
+  { code: "+7", flag: "🇷🇺" }, // Russia
+  { code: "+971", flag: "🇦🇪" }, // UAE
+  { code: "+65", flag: "🇸🇬" }, // Singapore
+  { code: "+60", flag: "🇲🇾" }, // Malaysia
+  { code: "+66", flag: "🇹🇭" }, // Thailand
+  { code: "+852", flag: "🇭🇰" }, // Hong Kong
+  { code: "+55", flag: "🇧🇷" }, // Brazil
+  { code: "+27", flag: "🇿🇦" }, // South Africa
+  { code: "+234", flag: "🇳🇬" }, // Nigeria
+  { code: "+20", flag: "🇪🇬" }, // Egypt
+  { code: "+966", flag: "🇸🇦" }, // Saudi Arabia
+  { code: "+64", flag: "🇳🇿" }, // New Zealand
 ]
 
 export default function DharmaSaathiLanding() {
@@ -67,6 +67,7 @@ export default function DharmaSaathiLanding() {
   const [authMode, setAuthMode] = useState<"login" | "signup">("signup")
   const [selectedCountryCode, setSelectedCountryCode] = useState("+91")
 
+  // Form validation states
   const [email, setEmail] = useState("")
   const [signupEmail, setSignupEmail] = useState("")
   const [phoneNumber, setPhoneNumber] = useState("")
@@ -74,11 +75,13 @@ export default function DharmaSaathiLanding() {
   const [signupEmailError, setSignupEmailError] = useState("")
   const [phoneError, setPhoneError] = useState("")
 
+  // Email validation
   const validateEmail = (email: string) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
     return emailRegex.test(email)
   }
 
+  // Phone validation - exactly 10 digits
   const validatePhone = (phone: string) => {
     const phoneRegex = /^\d{10}$/
     return phoneRegex.test(phone)
@@ -105,7 +108,7 @@ export default function DharmaSaathiLanding() {
   }
 
   const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value.replace(/\D/g, "")
+    const value = e.target.value.replace(/\D/g, "") // Remove non-digits
     setPhoneNumber(value)
     if (value && !validatePhone(value)) {
       setPhoneError("Phone number must be exactly 10 digits")
@@ -154,7 +157,11 @@ export default function DharmaSaathiLanding() {
                 </DialogDescription>
               </DialogHeader>
 
-              <Tabs value={authMode} onValueChange={(value) => setAuthMode(value as "login" | "signup")} className="w-full">
+              <Tabs
+                value={authMode}
+                onValueChange={(value) => setAuthMode(value as "login" | "signup")}
+                className="w-full"
+              >
                 <TabsList className="grid w-full grid-cols-2">
                   <TabsTrigger value="login">Sign In</TabsTrigger>
                   <TabsTrigger value="signup">Sign Up</TabsTrigger>
@@ -368,10 +375,11 @@ export default function DharmaSaathiLanding() {
       <section className="py-16 bg-gradient-to-r from-primary-900 via-primary-800 to-primary-700 text-white">
         <div className="container mx-auto px-4 text-center">
           <div className="max-w-4xl mx-auto">
-              <blockquote className="text-2xl lg:text-3xl font-light italic mb-6 leading-relaxed">
-                &quot;When two souls are meant for each other, no distance is too far, no time is too long, and no other love
-                can break them apart.&quot;
-              </blockquote>
+            <Sparkles className="w-12 h-12 mx-auto mb-6 text-gold-300" />
+            <blockquote className="text-2xl lg:text-3xl font-light italic mb-6 leading-relaxed">
+              &quot;When two souls are meant for each other, no distance is too far, no time is too long, and no other love
+              can break them apart.&quot;
+            </blockquote>
             <p className="text-gold-200 text-lg">— Ancient Sanskrit Wisdom</p>
           </div>
         </div>
@@ -576,10 +584,10 @@ export default function DharmaSaathiLanding() {
                     ))}
                   </div>
                 </div>
-                <p className="text-gray-600 mb-6 italic">
+                  <p className="text-gray-600 mb-6 italic">
                     &quot;As yoga instructors, we were looking for someone who understood our lifestyle. DharmaSaathi brought
                     us together beautifully.&quot;
-                </p>
+                  </p>
                 <div className="flex items-center">
                   <div className="w-12 h-12 bg-gradient-to-br from-gold-500 to-gold-600 rounded-full flex items-center justify-center mr-4">
                     <span className="text-white font-bold">A&R</span>
@@ -668,7 +676,10 @@ export default function DharmaSaathiLanding() {
                   <span className="text-lg text-gray-700">Location-based spiritual events</span>
                 </div>
               </div>
-              <Button className="bg-primary-900 hover:bg-primary-800 px-8 py-4 text-lg rounded-full" onClick={() => setIsLoginOpen(true)}>
+              <Button
+                className="bg-primary-900 hover:bg-primary-800 px-8 py-4 text-lg rounded-full"
+                onClick={() => setIsLoginOpen(true)}
+              >
                 Sign Up Now For Early Access
                 <Heart className="ml-2 w-5 h-5" />
               </Button>
@@ -713,7 +724,8 @@ export default function DharmaSaathiLanding() {
           <div className="max-w-4xl mx-auto">
             <h2 className="text-4xl lg:text-5xl font-bold mb-6">Your Spiritual Soulmate Awaits</h2>
             <p className="text-xl mb-8 opacity-90 leading-relaxed">
-              Join thousands of conscious souls who have found love, connection, and spiritual growth through DharmaSaathi. Your journey to authentic love starts here.
+              Join thousands of conscious souls who have found love, connection, and spiritual growth through
+              DharmaSaathi. Your journey to authentic love starts here.
             </p>
             <Button
               size="lg"
@@ -737,7 +749,8 @@ export default function DharmaSaathiLanding() {
                 <img src="/your-logo-path.png" alt="DharmaSaathi Logo" className="h-8 w-auto" />
               </div>
               <p className="text-gray-300 mb-6 leading-relaxed">
-                Connecting spiritual souls worldwide for authentic love and conscious relationships. Where dharma meets destiny.
+                Connecting spiritual souls worldwide for authentic love and conscious relationships. Where dharma meets
+                destiny.
               </p>
               <div className="flex space-x-4">
                 <div className="w-10 h-10 bg-primary-800 rounded-full flex items-center justify-center hover:bg-primary-700 transition-colors cursor-pointer">
