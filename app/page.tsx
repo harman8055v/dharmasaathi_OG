@@ -66,6 +66,13 @@ export default function DharmaSaathiLanding() {
   const [authMode, setAuthMode] = useState<"login" | "signup">("signup")
   const [selectedCountryCode, setSelectedCountryCode] = useState("+91")
 
+  // Listen for global event to open auth dialog
+  useEffect(() => {
+    const handler = () => setIsLoginOpen(true)
+    document.addEventListener("open-auth-dialog", handler)
+    return () => document.removeEventListener("open-auth-dialog", handler)
+  }, [])
+
   // Form validation states
   const [email, setEmail] = useState("")
   const [signupEmail, setSignupEmail] = useState("")
@@ -139,7 +146,7 @@ export default function DharmaSaathiLanding() {
             </Link>
           </nav>
           <Button
-            onClick={() => setIsLoginOpen(true)}
+            onClick={() => document.dispatchEvent(new Event("open-auth-dialog"))}
             className="bg-primary-900 hover:bg-primary-800 text-white px-6 py-2 rounded-full shadow-lg"
           >
             Sign Up
@@ -339,7 +346,7 @@ export default function DharmaSaathiLanding() {
               <Button
                 size="lg"
                 className="bg-primary-900 hover:bg-primary-800 text-white px-8 py-4 text-lg rounded-full shadow-xl transform hover:scale-105 transition-all duration-300"
-                onClick={() => setIsLoginOpen(true)}
+                onClick={() => document.dispatchEvent(new Event("open-auth-dialog"))}
               >
                 Get Started Free
                 <Heart className="ml-2 w-5 h-5" />
@@ -679,7 +686,7 @@ export default function DharmaSaathiLanding() {
               </div>
               <Button
                 className="bg-primary-900 hover:bg-primary-800 px-8 py-4 text-lg rounded-full"
-                onClick={() => setIsLoginOpen(true)}
+                onClick={() => document.dispatchEvent(new Event("open-auth-dialog"))}
               >
                 Sign Up Now For Early Access
                 <Heart className="ml-2 w-5 h-5" />
@@ -731,7 +738,7 @@ export default function DharmaSaathiLanding() {
             <Button
               size="lg"
               className="bg-white text-primary-900 hover:bg-beige-50 px-8 py-4 text-lg rounded-full shadow-xl transform hover:scale-105 transition-all duration-300"
-              onClick={() => setIsLoginOpen(true)}
+              onClick={() => document.dispatchEvent(new Event("open-auth-dialog"))}
             >
               Start Your Journey Today
               <Heart className="ml-2 w-5 h-5" />
