@@ -1,8 +1,8 @@
 "use client"
 
-import { useState } from "react"
+import { useEffect, useState } from "react"
+import { type Session } from "@supabase/supabase-js"
 import { supabase } from "@/lib/supabaseClient"
-import { useAuth } from "@/components/Auth/AuthProvider"
 import { AnimatePresence, motion } from "framer-motion"
 import BasicInfoStep from "./steps/basic-info-step"
 import SpiritualPathStep from "./steps/spiritual-path-step"
@@ -16,10 +16,24 @@ import WelcomeScreen from "./welcome-screen"
 import ProgressIndicator from "./progress-indicator"
 
 export default function OnboardingForm() {
-  const { session } = useAuth()
+  const [session, setSession] = useState<Session | null>(null)
   const [currentStep, setCurrentStep] = useState(1)
   const [formData, setFormData] = useState({})
   const [isComplete, setIsComplete] = useState(false)
+
+  useEffect(() => {
+    supabase.auth.getSession().then(({ data }) => {
+      setSession(data.session)
+    })
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((_event, session) => {
+      setSession(session)
+    })
+    return () => {
+      subscription.unsubscribe()
+    }
+  }, [])
 
   const totalSteps = 8
 
