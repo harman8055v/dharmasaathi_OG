@@ -13,7 +13,6 @@ import {
   DialogDescription,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "@/components/ui/dialog"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Label } from "@/components/ui/label"
@@ -139,13 +138,17 @@ export default function DharmaSaathiLanding() {
               FAQ
             </Link>
           </nav>
-          <Dialog open={isLoginOpen} onOpenChange={setIsLoginOpen} modal={false}>
-            <DialogTrigger asChild>
-              <Button className="bg-primary-900 hover:bg-primary-800 text-white px-6 py-2 rounded-full shadow-lg">
-                Sign Up
-              </Button>
-            </DialogTrigger>
-            <DialogContent className="sm:max-w-md">
+          <Button
+            onClick={() => setIsLoginOpen(true)}
+            className="bg-primary-900 hover:bg-primary-800 text-white px-6 py-2 rounded-full shadow-lg"
+          >
+            Sign Up
+          </Button>
+        </div>
+      </header>
+
+      <Dialog open={isLoginOpen} onOpenChange={setIsLoginOpen} modal={false}>
+        <DialogContent className="sm:max-w-md">
               <DialogHeader>
                 <DialogTitle className="text-center text-2xl font-bold text-primary-900">
                   {authMode === "login" ? "Welcome Back" : "Join DharmaSaathi"}
@@ -306,8 +309,6 @@ export default function DharmaSaathiLanding() {
               </div>
             </DialogContent>
           </Dialog>
-        </div>
-      </header>
 
       {/* Hero Section */}
       <section className="relative py-20 lg:py-32 overflow-hidden">
