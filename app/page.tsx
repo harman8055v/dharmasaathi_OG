@@ -3,6 +3,8 @@
 import type React from "react"
 
 import { useState } from "react"
+import { useRouter } from "next/navigation"
+import { supabase } from "@/lib/supabaseClient"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
@@ -66,6 +68,13 @@ export default function DharmaSaathiLanding() {
   const [authMode, setAuthMode] = useState<"login" | "signup">("signup")
   const [selectedCountryCode, setSelectedCountryCode] = useState("+91")
 
+  const router = useRouter()
+
+  const [firstName, setFirstName] = useState("")
+  const [lastName, setLastName] = useState("")
+  const [signupPassword, setSignupPassword] = useState("")
+  const [signupError, setSignupError] = useState("")
+
   // Form validation states
   const [email, setEmail] = useState("")
   const [signupEmail, setSignupEmail] = useState("")
@@ -114,6 +123,34 @@ export default function DharmaSaathiLanding() {
     } else {
       setPhoneError("")
     }
+  }
+
+  const handleSignUp = async () => {
+    setSignupError("")
+    if (!signupEmail || !signupPassword) {
+      setSignupError("Email and password are required")
+      return
+    }
+    if (signupEmailError || phoneError) return
+    const { data, error } = await supabase.auth.signUp({
+      email: signupEmail,
+      password: signupPassword,
+      options: {
+        data: { first_name: firstName, last_name: lastName },
+      },
+    })
+    if (error || !data.user) {
+      setSignupError(error?.message || "Sign up failed")
+      return
+    }
+    await supabase.from("users").insert({
+      id: data.user.id,
+      email: signupEmail,
+      first_name: firstName,
+      last_name: lastName,
+    })
+    setIsLoginOpen(false)
+    router.push("/onboarding")
   }
 
   return (
@@ -202,11 +239,23 @@ export default function DharmaSaathiLanding() {
                     <div className="grid grid-cols-2 gap-4">
                       <div>
                         <Label htmlFor="firstName">First Name</Label>
-                        <Input id="firstName" placeholder="First name" className="mt-1" />
+                        <Input
+                          id="firstName"
+                          placeholder="First name"
+                          className="mt-1"
+                          value={firstName}
+                          onChange={(e) => setFirstName(e.target.value)}
+                        />
                       </div>
                       <div>
                         <Label htmlFor="lastName">Last Name</Label>
-                        <Input id="lastName" placeholder="Last name" className="mt-1" />
+                        <Input
+                          id="lastName"
+                          placeholder="Last name"
+                          className="mt-1"
+                          value={lastName}
+                          onChange={(e) => setLastName(e.target.value)}
+                        />
                       </div>
                     </div>
                     <div>
@@ -259,9 +308,24 @@ export default function DharmaSaathiLanding() {
                     </div>
                     <div>
                       <Label htmlFor="signupPassword">Password</Label>
-                      <Input id="signupPassword" type="password" placeholder="••••••••" className="mt-1" />
+                      <Input
+                        id="signupPassword"
+                        type="password"
+                        placeholder="••••••••"
+                        className="mt-1"
+                        value={signupPassword}
+                        onChange={(e) => setSignupPassword(e.target.value)}
+                      />
                     </div>
-                    <Button className="w-full bg-primary-900 hover:bg-primary-800">Create Account</Button>
+                    {signupError && (
+                      <p className="text-red-500 text-sm">{signupError}</p>
+                    )}
+                    <Button
+                      className="w-full bg-primary-900 hover:bg-primary-800"
+                      onClick={handleSignUp}
+                    >
+                      Create Account
+                    </Button>
                   </div>
                 </TabsContent>
               </Tabs>
