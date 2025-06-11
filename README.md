@@ -148,6 +148,11 @@ db_schema.md — Database schema
 Pull requests, ideas, and suggestions are welcome!
 Please read PRD.md and AGENTS.md for contribution guidelines.
 
+### Authentication Flow
+Users can create an account from the landing page. The signup form stores the
+provided phone number along with first and last name in Supabase and then
+redirects to the onboarding flow.
+
 🙏 Credits & License
 Created by Harman Batish
 MIT License.
